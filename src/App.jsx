@@ -9,7 +9,7 @@ import Home from './Components/Home/Home'
 function App() {
 
   return (
-    <div className='w-10/12 mx-auto'>
+    <div className='w-11/12 mx-auto'>
       <Routes>
         <Route path='/' element={<Navigation/>}>
         <Route index element={<Home/>} />
