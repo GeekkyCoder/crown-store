@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState,useEffect } from "react";
 
 import ShopData from "../shop-data.json";
 
@@ -41,8 +41,6 @@ function ProductContext({ children }) {
   };
 
   const value = { products, setProducts, cartItems, addToCart };
-
-  console.log(cartItems);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
