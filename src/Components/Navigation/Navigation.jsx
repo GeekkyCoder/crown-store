@@ -4,14 +4,14 @@ import Logo from "../../assets/crown.svg";
 import { Outlet } from "react-router-dom";
 
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
-import CartMenu from "../../ProductMenu/CartMenu";
+import CartMenu from "../CartMenu/CartMenu";
 
 import { Context } from "../../Context/CartContext";
 import { Context as ProductContext } from "../../Context/ProductContext";
 
 function Navigation() {
   const { isCartOpen, toggleCart } = useContext(Context);
-  const { cartItems } = useContext(ProductContext);
+  const { cartItems,cartCount } = useContext(ProductContext);
 
   console.log(`nav: ${isCartOpen}`);
 
@@ -36,10 +36,10 @@ function Navigation() {
             Sign up
           </NavLink>
 
-          {cartItems.length > 0 && (
-            <div>
-              {cartItems.length}
-              <ShoppingBagOutlinedIcon fontSize="medium" onClick={toggleCart} />
+          {cartCount > 0 && (
+            <div className="relative">
+              <span className="absolute z-50 left-[12px] top-4 text-[10px] text-center font-bold">{cartCount}</span>
+              <ShoppingBagOutlinedIcon fontSize="large" onClick={toggleCart} />
             </div>
           )}
 

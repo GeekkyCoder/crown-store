@@ -10,7 +10,7 @@ function ProductCard({ product }) {
     <div className="relative">
       <img src={imageUrl} alt={name} />
       <button
-        onClick={(e) => addToCart(e, product)}
+        onClick={() => addToCart(product)}
         className="absolute bottom-10 left-14 bg-black text-gray-50 p-2 rounded-md w-[200px] hover:bg-white hover:text-black shadow-lg   "
       >
         Add to Cart

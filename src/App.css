@@ -1,20 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@layer utilities {
+  .scrollbar-medium::-webkit-scrollbar {
+    width: 9px;
+  }
+}
 
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
-body{
+body {
   margin: 0;
   padding: 0;
-  padding: 2em ;
-  font-family: 'Roboto', sans-serif;
+  padding: 2em;
+  font-family: "Roboto", sans-serif;
 }
 
-*{
+* {
   box-sizing: border-box;
-}
-
-.nav-link{
-
 }

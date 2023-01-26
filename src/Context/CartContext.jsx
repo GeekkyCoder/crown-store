@@ -5,6 +5,7 @@ const Context = createContext();
 function CartContextProvider({ children }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+
   const toggleCart = () => {
     setIsCartOpen(prevStat => !prevStat)
   }
