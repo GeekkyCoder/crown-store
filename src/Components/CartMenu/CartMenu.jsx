@@ -12,7 +12,7 @@ function CartMenu() {
   }
   return (
     <Fragment>
-      <div className="flex absolute shadow-md h-[200px] scrollbar-thin  scrollbar-thumb-gray-600 scrollbar-track-gray-100   top-10 flex-col z-50 py-4 bg-white text-gray-600 rounded w-[300px]">
+      <div className="flex absolute shadow-md h-[200px] scrollbar-thin  scrollbar-thumb-gray-600 scrollbar-track-gray-100   top-10 flex-col z-50 py-4 bg-gray-800 text-white  rounded w-[300px]">
         {cartItems.map((item) => {
           const { id, name, imageUrl, price, quantity } = item;
           return (

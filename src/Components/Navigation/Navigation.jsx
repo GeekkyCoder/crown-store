@@ -39,7 +39,7 @@ function Navigation() {
           {cartCount > 0 && (
             <div className="relative">
               <span className="absolute z-50 left-[12px] top-4 text-[10px] text-center font-bold">{cartCount}</span>
-              <ShoppingBagOutlinedIcon fontSize="large" onClick={toggleCart} />
+              <ShoppingBagOutlinedIcon fontSize="large" onClick={toggleCart} className="hover:cursor-pointer hover:scale-[1.05]"/>
             </div>
           )}
 

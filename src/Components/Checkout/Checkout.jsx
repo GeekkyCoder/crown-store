@@ -53,9 +53,9 @@ function Checkout() {
                       onClick={() => addToCart(item)}
                     />
                   </div>
-                  <p className="ml-24">{price}</p>
+                  <p className="ml-24">{quantity}x{price}</p>
                   <CloseOutlinedIcon
-                    className="ml-36"
+                    className="ml-36 hover:cursor-pointer"
                     onClick={() => deleteItemFromCart(item)}
                     fontSize="large"
                   />
@@ -63,8 +63,9 @@ function Checkout() {
               );
             })}
           </div>
-          <div>
-            <span>{totalPrice}</span>
+          <div className="ml-auto w-[220px] flex justify-evenly items-center uppercase ">
+            <span className="text-gray-700 text-xl">Total Price:</span>
+            <span className="text-xl text-gray-700">${totalPrice}</span>
          </div>
         </div>
       ) : (

@@ -7,11 +7,11 @@ function ProductCard({ product }) {
   const { name, imageUrl, price } = product;
 
   return (
-    <div className="relative">
-      <img src={imageUrl} alt={name} />
+    <div className="relative hover:scale-[1.05] transition-all ">
+      <img className="hover:opacity-60 hover:cursor-pointer hover:transition-opacity ease-in-out" src={imageUrl} alt={name} />
       <button
         onClick={() => addToCart(product)}
-        className="absolute bottom-10 left-14 bg-black text-gray-50 p-2 rounded-md w-[200px] hover:bg-white hover:text-black shadow-lg   "
+        className="absolute w-1/2 bottom-20 left-16 bg-white text-black p-4 px-4 rounded-sm opacity-60"
       >
         Add to Cart
       </button>
