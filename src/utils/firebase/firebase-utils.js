@@ -4,6 +4,9 @@ import {
   GoogleAuthProvider,
   getAuth,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
 } from "firebase/auth";
 import { getFirestore, getDoc, setDoc, doc } from "firebase/firestore";
 
@@ -28,10 +31,17 @@ const googleProvider = new GoogleAuthProvider();
 export const googleSignInPopUp = async () =>
   await signInWithPopup(auth, googleProvider);
 
-export const signInUserWithEmailAndPassword = async () =>
-  await signInWithEmailAndPassword(auth, googleProvider);
+export const signInUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await signInWithEmailAndPassword(auth, email, password);
+};
 
-export const createUserWithDocument = async (userAuth) => {
+export const createUserAuthWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const createUserWithDocument = async (userAuth,additionalInformation) => {
   if (!userAuth) return;
 
   const userDocRef = doc(db, "users", userAuth.uid);
@@ -43,11 +53,13 @@ export const createUserWithDocument = async (userAuth) => {
   const { displayName, email } = userAuth;
 
   if (!userSnapShot.exists()) {
+    console.log("hey")
     try {
       await setDoc(userDocRef, {
         displayName,
         email,
         createdAt,
+        ...additionalInformation
       });
     } catch (err) {
       console.log(`something went wrong, ${err}`);
@@ -56,3 +68,9 @@ export const createUserWithDocument = async (userAuth) => {
 
   return userDocRef;
 };
+
+export const onAuthUserStateChange =  (callbackfn => {
+    onAuthStateChanged(auth,callbackfn)
+})
+
+export const signOutUserAuth = async() => signOut(auth)
