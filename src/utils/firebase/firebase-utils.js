@@ -6,9 +6,18 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signOut
+  signOut,
 } from "firebase/auth";
-import { getFirestore, getDoc, setDoc, doc,collection,writeBatch } from "firebase/firestore";
+import {
+  getFirestore,
+  getDoc,
+  setDoc,
+  doc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBiGNoVpq5bkg8yHrHTTBi0_8BBfentr4M",
@@ -41,7 +50,10 @@ export const createUserAuthWithEmailAndPassword = async (email, password) => {
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const createUserWithDocument = async (userAuth,additionalInformation) => {
+export const createUserWithDocument = async (
+  userAuth,
+  additionalInformation
+) => {
   if (!userAuth) return;
 
   const userDocRef = doc(db, "users", userAuth.uid);
@@ -53,13 +65,13 @@ export const createUserWithDocument = async (userAuth,additionalInformation) => 
   const { displayName, email } = userAuth;
 
   if (!userSnapShot.exists()) {
-    console.log("hey")
+    console.log("hey");
     try {
       await setDoc(userDocRef, {
         displayName,
         email,
         createdAt,
-        ...additionalInformation
+        ...additionalInformation,
       });
     } catch (err) {
       console.log(`something went wrong, ${err}`);
@@ -69,22 +81,39 @@ export const createUserWithDocument = async (userAuth,additionalInformation) => 
   return userDocRef;
 };
 
-export const onAuthUserStateChange =  (callbackfn => {
-    onAuthStateChanged(auth,callbackfn)
-})
+export const onAuthUserStateChange = (callbackfn) => {
+  onAuthStateChanged(auth, callbackfn);
+};
 
-export const signOutUserAuth = async() => signOut(auth)
+export const signOutUserAuth = async () => signOut(auth);
 
-export const addCollectionAndDocuments = async (collectionKey,objectsToAdd) => {
- const collectRef = await collection(db,collectionKey)
- const batch = writeBatch(db)
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectRef = await collection(db, collectionKey);
+  const batch = writeBatch(db);
 
- objectsToAdd.forEach((obj => {
-  const {title} = obj
-  const docRef = doc(collectRef, title.toLowerCase())
-  batch.set(docRef,obj)
- }))
+  objectsToAdd.forEach((obj) => {
+    const { title } = obj;
+    const docRef = doc(collectRef, title.toLowerCase());
+    batch.set(docRef, obj);
+  });
 
- await batch.commit()
-//  console.log(done)
-}
+  await batch.commit();
+  //  console.log(done)
+};
+
+export const getCatogriesandDocuments = async () => {
+  const collectionRef = collection(db, "catogories");
+  const q = query(collectionRef);
+
+  const querySnapShot = await getDocs(q);
+  const catogoryMap = querySnapShot.docs.reduce((acc, querySnapShot) => {
+    const { items, title } = querySnapShot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return catogoryMap;
+};
