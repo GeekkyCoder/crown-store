@@ -6,19 +6,35 @@ function ProductCard({ product }) {
   const { addToCart } = useContext(Context);
   const { name, imageUrl, price } = product;
 
+  //   <div className='product-card-container'>
+  //   <img src={imageUrl} alt={`${name}`} />
+  //   <div className='footer'>
+  //     <span className='name'>{name}</span>
+  //     <span className='price'>{price}</span>
+  //   </div>
+  //   <Button buttonType='inverted' onClick={addProductToCart}>
+  //     Add to card
+  //   </Button>
+  // </div>
+  // );
+
   return (
-    <div className="relative hover:scale-[1.05] transition-all ">
-      <img className="hover:opacity-60 hover:cursor-pointer hover:transition-opacity ease-in-out" src={imageUrl} alt={name} />
+    <div className="relative hover:scale-[1.05] transition-all w-full flex flex-col h-[350px] items-center ">
+      <img
+        className="hover:opacity-60 hover:cursor-pointer hover:transition-opacity ease-in-out"
+        src={imageUrl}
+        alt={name}
+      />
+      <div className="flex justify-between mt-2">
+        <span className="text-sm mr-20">{name}</span>
+        <span className="text-sm">${price}</span>
+      </div>
       <button
         onClick={() => addToCart(product)}
         className="absolute w-1/2 bottom-20 left-16 bg-white text-black p-4 px-4 rounded-sm opacity-60"
       >
         Add to Cart
       </button>
-      <div className="flex justify-between mt-2">
-        <h2>{name}</h2>
-        <span>{price}</span>
-      </div>
     </div>
   );
 }
