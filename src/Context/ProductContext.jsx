@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 // import {addCollectionAndDocuments} from "../utils/firebase/firebase-utils"
 import {getCatogriesandDocuments} from "../utils/firebase/firebase-utils"
-import ShopData from "../shop-data";
+// import ShopData from "../shop-data";
 
 const Context = createContext();
 
@@ -44,8 +44,8 @@ const removeItem = (cartItems, productToRemove) => {
   return cartItems.filter((item) => item.id !== productToRemove.id);
 };
 
-function ProductContext({ children }) {
-  const [products, setProducts] = useState(ShopData);
+function CatogoriesProvider({ children }) {
+  const [catogories, setCatogories] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -80,7 +80,7 @@ function ProductContext({ children }) {
   useEffect(()=> {
    const getCollections = async () => {
     const catogoryMap = await getCatogriesandDocuments()
-    console.log(catogoryMap)
+    setCatogories(catogoryMap)
    }
    getCollections()
   },[])
@@ -91,8 +91,7 @@ function ProductContext({ children }) {
   // },[])
 
   const value = {
-    products,
-    setProducts,
+    catogories,
     cartItems,
     addToCart,
     cartCount,
@@ -105,4 +104,4 @@ function ProductContext({ children }) {
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
-export { ProductContext, Context };
+export { CatogoriesProvider, Context };
