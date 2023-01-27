@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 
-import ShopData from "../shop-data.json";
+import ShopData from "../shop-data";
 
 const Context = createContext();
 

@@ -9,15 +9,26 @@ import CartMenu from "../CartMenu/CartMenu";
 import { Context } from "../../Context/CartContext";
 import { Context as ProductContext } from "../../Context/ProductContext";
 
+import { googleSignInPopUp,createUserWithDocument } from "../../utils/firebase/firebase-utils";
+
+
+const handleSignInWithPopup = async () => {
+  const {user}= await googleSignInPopUp()
+  await createUserWithDocument(user)
+  console.log(user)
+}
+
 function Navigation() {
   const { isCartOpen, toggleCart } = useContext(Context);
   const { cartItems,cartCount } = useContext(ProductContext);
+
+
 
   console.log(`nav: ${isCartOpen}`);
 
   return (
     <div>
-      <div className="navigation-container flex items-cente p-2 relative">
+      <div className="navigation-container flex items-center p-2 relative">
         <div className="w-1/4">
           <NavLink to={"/"}>
             <img src={Logo} alt="" />
@@ -26,14 +37,14 @@ function Navigation() {
 
         <div
           className={`flex w-[${
-            cartItems.length > 0 ? "300px" : "200px"
+            cartItems.length > 0 ? "300px" : "250px"
           }] justify-between  ml-auto mr-10`}
         >
           <NavLink className="text-xl text-gray-600" to={"/shop"}>
             Shop
           </NavLink>
-          <NavLink className="text-xl text-gray-600" to={"/signup"}>
-            Sign up
+          <NavLink className="text-xl text-gray-600" to={"/auth"}>
+            Sign in
           </NavLink>
 
           {cartCount > 0 && (
@@ -44,6 +55,8 @@ function Navigation() {
           )}
 
           {isCartOpen && <CartMenu />}
+
+          {/* <button onClick={handleSignInWithPopup}>sign in with google popup</button> */}
         </div>
       </div>
       <Outlet />
