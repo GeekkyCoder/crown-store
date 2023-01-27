@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-
+// import {addCollectionAndDocuments} from "../utils/firebase/firebase-utils"
 import ShopData from "../shop-data";
 
 const Context = createContext();
@@ -74,6 +74,11 @@ function ProductContext({ children }) {
     }, 0);
     setTotalPrice(total);
   }, [cartItems]);
+
+
+  // useEffect(()=> {
+  //  addCollectionAndDocuments("catogories",ShopData)
+  // },[])
 
   const value = {
     products,

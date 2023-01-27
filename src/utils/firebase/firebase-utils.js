@@ -8,7 +8,7 @@ import {
   onAuthStateChanged,
   signOut
 } from "firebase/auth";
-import { getFirestore, getDoc, setDoc, doc } from "firebase/firestore";
+import { getFirestore, getDoc, setDoc, doc,collection,writeBatch } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBiGNoVpq5bkg8yHrHTTBi0_8BBfentr4M",
@@ -74,3 +74,17 @@ export const onAuthUserStateChange =  (callbackfn => {
 })
 
 export const signOutUserAuth = async() => signOut(auth)
+
+export const addCollectionAndDocuments = async (collectionKey,objectsToAdd) => {
+ const collectRef = await collection(db,collectionKey)
+ const batch = writeBatch(db)
+
+ objectsToAdd.forEach((obj => {
+  const {title} = obj
+  const docRef = doc(collectRef, title.toLowerCase())
+  batch.set(docRef,obj)
+ }))
+
+ await batch.commit()
+//  console.log(done)
+}
