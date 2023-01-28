@@ -117,3 +117,4 @@ export const getCatogriesandDocuments = async () => {
 
   return catogoryMap;
 };
+
