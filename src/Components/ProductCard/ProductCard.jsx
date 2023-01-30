@@ -19,9 +19,9 @@ function ProductCard({ product }) {
   // );
 
   return (
-    <div className="relative hover:scale-[1.05] transition-all w-full flex flex-col h-[350px] items-center ">
+    <div className="relative my-10 hover:scale-[1.05] transition-all w-full flex flex-col h-[350px] items-center ">
       <img
-        className="hover:opacity-60 hover:cursor-pointer hover:transition-opacity ease-in-out"
+        className="hover:opacity-60 w-full h-[400px] object-cover hover:cursor-pointer hover:transition-opacity ease-in-out"
         src={imageUrl}
         alt={name}
       />
