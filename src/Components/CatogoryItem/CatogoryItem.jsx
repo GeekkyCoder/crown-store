@@ -1,11 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CatogoryItem({ catogory }) {
-  const { title, imageUrl } = catogory;
+  const { title, imageUrl,route } = catogory;
+  const navigate = useNavigate()
+
+  const navigateHandler = () => navigate(route)
 
   return (
-    <div className="w-full my-4 relative hover:scale-[1.05] transition-all">
+    <div className="w-full my-4 relative hover:scale-[1.05] transition-all" onClick={navigateHandler}>
       {/* <img width={"100%"} src={imageUrl} alt={title} /> */}
       <div
         style={{
