@@ -1,13 +1,35 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer } from "react";
 
 const Context = createContext();
 
+
+const initialState = {
+   isCartOpen: false
+}
+
+const CART_ACTION_TYPES = {
+  SET_IS_CART_OPEN: "SET_IS_CART_OPEN"
+}
+
+const cartReducer = (state,action) => {
+   const {type} = action 
+   switch(type){
+     case CART_ACTION_TYPES.SET_IS_CART_OPEN:
+      return {
+        ...state,
+        isCartOpen : !state.isCartOpen 
+      }
+      default :
+      return state
+   }
+}
+
 function CartContextProvider({ children }) {
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [{isCartOpen},dispatch] = useReducer(cartReducer,initialState)
 
 
   const toggleCart = () => {
-    setIsCartOpen(prevStat => !prevStat)
+     dispatch({type:CART_ACTION_TYPES.SET_IS_CART_OPEN})
   }
 
 
