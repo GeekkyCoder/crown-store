@@ -1,9 +1,58 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useReducer } from "react";
 // import {addCollectionAndDocuments} from "../utils/firebase/firebase-utils"
-import {getCatogriesandDocuments} from "../utils/firebase/firebase-utils"
+import { getCatogriesandDocuments } from "../utils/firebase/firebase-utils";
 // import ShopData from "../shop-data";
 
 const Context = createContext();
+
+const initialsState = {
+  catogories: {},
+  cartItems: [],
+  cartCount: 0,
+  totalPrice: 0,
+};
+
+const productReducer = (state, { type, payload }) => {
+  switch (type) {
+    case "SET_CATOGORIES":
+      return {
+        ...state,
+        catogories: payload,
+      };
+    case "ADD_ITEMS_INTO_CART":
+      return {
+        ...state,
+        cartItems: payload,
+      };
+
+    case "REMOVE_ITEM_FROM_CART":
+      return {
+        ...state,
+        cartItems: payload,
+      };
+
+    case "REMOVE_ITEM_BY_1":
+      return {
+        ...state,
+        cartItems: payload,
+      };
+
+    case "INCREMENT_CART_COUNT":
+      return {
+        ...state,
+        cartCount: payload,
+      };
+
+    case "SET_TOTAL_PRICE":
+      return {
+        ...state,
+        totalPrice: payload,
+      };
+
+    default:
+      return state;
+  }
+};
 
 const addItemToCart = (cartItems, productToAdd) => {
   const itemExists = cartItems.find((item) => {
@@ -17,7 +66,7 @@ const addItemToCart = (cartItems, productToAdd) => {
       return item.id === productToAdd.id
         ? {
             ...item,
-            quantity: item.quantity + 1
+            quantity: item.quantity + 1,
           }
         : item;
     });
@@ -45,29 +94,46 @@ const removeItem = (cartItems, productToRemove) => {
 };
 
 function CatogoriesProvider({ children }) {
-  const [catogories, setCatogories] = useState({});
-  const [cartItems, setCartItems] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [{ catogories, cartItems, cartCount, totalPrice }, dispatch] =
+    useReducer(productReducer, initialsState);
+
+  // const [catogories, setCatogories] = useState({});
+  // const [cartItems, setCartItems] = useState([]);
+  // const [cartCount, setCartCount] = useState(0);
+  // const [totalPrice, setTotalPrice] = useState(0);
 
   const addToCart = (product) => {
-    setCartItems(addItemToCart(cartItems, product));
+    dispatch({
+      type: "ADD_ITEMS_INTO_CART",
+      payload: addItemToCart(cartItems, product),
+    });
   };
 
   const DecrementCartItems = (product) => {
-    setCartItems(removeItemBy1(cartItems, product));
+    dispatch({
+      type: "REMOVE_ITEM_BY_1",
+      payload: removeItemBy1(cartItems, product),
+    });
   };
 
   const deleteItemFromCart = (productToDelete) => {
-    setCartItems(removeItem(cartItems, productToDelete));
+    // setCartItems(removeItem(cartItems, productToDelete));
+    dispatch({
+      type: "REMOVE_ITEM_FROM_CART",
+      payload: removeItem(cartItems, productToDelete),
+    });
   };
 
   useEffect(() => {
     const newCount = cartItems.reduce((total, currElement) => {
       return total + currElement.quantity;
     }, 0);
-    setCartCount(newCount);
+    dispatch({ type: "INCREMENT_CART_COUNT", payload: newCount });
   }, [cartItems]);
+
+  const setTotalPrice = (total) => {
+    dispatch({ type: "SET_TOTAL_PRICE", payload: total });
+  };
 
   useEffect(() => {
     const total = cartItems.reduce((total, currentCartItem) => {
@@ -76,15 +142,17 @@ function CatogoriesProvider({ children }) {
     setTotalPrice(total);
   }, [cartItems]);
 
+  const setCatogories = (catogoryMap) => {
+    dispatch({ type: "SET_CATOGORIES", payload: catogoryMap });
+  };
 
-  useEffect(()=> {
-   const getCollections = async () => {
-    const catogoryMap = await getCatogriesandDocuments()
-    setCatogories(catogoryMap)
-   }
-   getCollections()
-  },[])
-
+  useEffect(() => {
+    const getCollections = async () => {
+      const catogoryMap = await getCatogriesandDocuments();
+      setCatogories(catogoryMap);
+    };
+    getCollections();
+  }, []);
 
   // useEffect(()=> {
   //  addCollectionAndDocuments("catogories",ShopData)
