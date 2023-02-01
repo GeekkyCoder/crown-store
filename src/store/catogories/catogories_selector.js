@@ -1,0 +1,1 @@
+export const catogoriesSelector = state => state.catogories.catogories

@@ -7,7 +7,6 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CartMenu from "../CartMenu/CartMenu";
 
 import { Context } from "../../Context/CartContext";
-import { Context as UserAuthContext } from "../../Context/UserAuthContext";
 import { Context as ProductContext } from "../../Context/ProductContext";
 
 import { signOutUserAuth } from "../../utils/firebase/firebase-utils";
