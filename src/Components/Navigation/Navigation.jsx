@@ -12,10 +12,16 @@ import { Context as ProductContext } from "../../Context/ProductContext";
 
 import { signOutUserAuth } from "../../utils/firebase/firebase-utils";
 
+import { useSelector } from "react-redux";
+import { userSelector } from "../../store/user/user-selector";
+
 function Navigation() {
+
+const currentUser = useSelector(userSelector)
+
   const { isCartOpen, toggleCart } = useContext(Context);
   const { cartItems, cartCount } = useContext(ProductContext);
-  const { currentUser } = useContext(UserAuthContext);
+  // const { currentUser } = useContext(UserAuthContext);
 
   const handleUserSignOut = async () => {
     await signOutUserAuth();

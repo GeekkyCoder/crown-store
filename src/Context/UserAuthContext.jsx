@@ -38,16 +38,16 @@ const UserAuthProvider = ({ children }) => {
     console.log("dispatched")
   }
 
-  useEffect(() => {
-    const unsub = onAuthUserStateChange(async (user) => {
-      if (user) {
-        await createUserWithDocument(user);
-      }
-      setCurrentUser(user);
-    });
+  // useEffect(() => {
+  //   const unsub = onAuthUserStateChange(async (user) => {
+  //     if (user) {
+  //       await createUserWithDocument(user);
+  //     }
+  //     setCurrentUser(user);
+  //   });
 
-    return unsub;
-  }, []);
+  //   return unsub;
+  // }, []);
 
   const value = { currentUser };
   return <Context.Provider value={value}>{children}</Context.Provider>;
