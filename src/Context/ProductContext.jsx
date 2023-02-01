@@ -146,13 +146,13 @@ function CatogoriesProvider({ children }) {
     dispatch({ type: "SET_CATOGORIES", payload: catogoryMap });
   };
 
-  useEffect(() => {
-    const getCollections = async () => {
-      const catogoryMap = await getCatogriesandDocuments();
-      setCatogories(catogoryMap);
-    };
-    getCollections();
-  }, []);
+  // useEffect(() => {
+  //   const getCollections = async () => {
+  //     const catogoryMap = await getCatogriesandDocuments();
+  //     setCatogories(catogoryMap);
+  //   };
+  //   getCollections();
+  // }, []);
 
   // useEffect(()=> {
   //  addCollectionAndDocuments("catogories",ShopData)

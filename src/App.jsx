@@ -1,3 +1,14 @@
+import { useEffect } from "react";
+
+import {
+  onAuthUserStateChange,
+  createUserWithDocument,
+} from "./utils/firebase/firebase-utils";
+
+import { setCurrentUser } from "./store/user/user-action";
+import { useDispatch } from "react-redux";
+
+
 import "./App.css";
 import Navigation from "./Components/Navigation/Navigation";
 import { Routes, Route } from "react-router-dom";
@@ -8,6 +19,20 @@ import Checkout from "./Components/Checkout/Checkout";
 import Auth from "./Components/Auth/Auth";
 
 function App() {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const unsub = onAuthUserStateChange(async (user) => {
+      if (user) {
+        await createUserWithDocument(user);
+      }
+      dispatch(setCurrentUser(user));
+    });
+
+    return unsub;
+  }, []);
+
   return (
     <div className="w-11/12 mx-auto">
       <Routes>

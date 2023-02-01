@@ -7,15 +7,20 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CartMenu from "../CartMenu/CartMenu";
 
 import { Context } from "../../Context/CartContext";
-import { Context as UserAuthContext } from "../../Context/UserAuthContext";
 import { Context as ProductContext } from "../../Context/ProductContext";
 
 import { signOutUserAuth } from "../../utils/firebase/firebase-utils";
 
+import { useSelector } from "react-redux";
+import { userSelector } from "../../store/user/user-selector";
+
 function Navigation() {
+
+const currentUser = useSelector(userSelector)
+
   const { isCartOpen, toggleCart } = useContext(Context);
   const { cartItems, cartCount } = useContext(ProductContext);
-  const { currentUser } = useContext(UserAuthContext);
+  // const { currentUser } = useContext(UserAuthContext);
 
   const handleUserSignOut = async () => {
     await signOutUserAuth();
