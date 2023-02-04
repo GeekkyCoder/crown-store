@@ -31,7 +31,7 @@ function ProductCard({ product }) {
       </div>
       <button
         onClick={() => addToCart(product)}
-        className="absolute w-1/2 bottom-20 left-16 bg-white text-black p-4 px-4 rounded-sm opacity-60"
+        className="absolute w-1/2 bottom-20 left-16 bg-white hover:bg-black hover:text-white text-black p-4 px-4 rounded-sm opacity-60"
       >
         Add to Cart
       </button>
