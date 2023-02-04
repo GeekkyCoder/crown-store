@@ -6,19 +6,23 @@ import { Outlet } from "react-router-dom";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CartMenu from "../CartMenu/CartMenu";
 
-import { Context } from "../../Context/CartContext";
 import { Context as ProductContext } from "../../Context/ProductContext";
 
 import { signOutUserAuth } from "../../utils/firebase/firebase-utils";
 
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userSelector } from "../../store/user/user-selector";
+import { cartSelector } from "../../store/cart/cart_selector";
+import { setCart } from "../../store/cart/cart_action";
 
 function Navigation() {
 
 const currentUser = useSelector(userSelector)
+const dispatch = useDispatch()
 
-  const { isCartOpen, toggleCart } = useContext(Context);
+  const isCartOpen = useSelector(cartSelector)
+
   const { cartItems, cartCount } = useContext(ProductContext);
   // const { currentUser } = useContext(UserAuthContext);
 
@@ -58,7 +62,7 @@ const currentUser = useSelector(userSelector)
               </span>
               <ShoppingBagOutlinedIcon
                 fontSize="large"
-                onClick={toggleCart}
+                onClick={() => dispatch(setCart())}
                 className="hover:cursor-pointer hover:scale-[1.05]"
               />
             </div>
