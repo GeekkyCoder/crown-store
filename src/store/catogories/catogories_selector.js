@@ -4,3 +4,7 @@ export const catogoriesSelector = (state) =>
     acc[title.toLowerCase()] = items;
     return acc;
   }, {});
+
+  export const isLoadingSelector = (state) => {
+    return state.catogories.isLoading
+  }
