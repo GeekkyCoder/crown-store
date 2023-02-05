@@ -4,24 +4,19 @@ import { Routes, Route, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-import { Context as ProductContext } from "../../Context/ProductContext";
 import Catogory from "../Catogory/Catogory";
 import ProductCard from "../ProductCard/ProductCard";
 
-import { getCatogriesandDocuments } from "../../utils/firebase/firebase-utils";
 import { catogoriesSelector } from "../../store/catogories/catogories_selector";
-import { setCotogories } from "../../store/catogories/catogories-action";
+
+import { fetchCatogoriesAsync } from "../../store/catogories/catogories-action";
 
 function Shop() {
   const dispatch = useDispatch()
   const catogories = useSelector(catogoriesSelector)
   
   useEffect(() => {
-    const getCollections = async () => {
-      const catogoryMap = await getCatogriesandDocuments();
-      dispatch(setCotogories(catogoryMap));
-    };
-    getCollections();
+   dispatch(fetchCatogoriesAsync())
   }, []);
 
   return (
