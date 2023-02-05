@@ -12,7 +12,7 @@ const middlewares = [process.env.NODE_ENV !== "production" && logger,thunk].filt
 const persistConfig = {
     key:"root",
     storage,
-    blacklist:["cart"]
+    whitlist:["cart"]
 
 }
 
