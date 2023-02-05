@@ -8,15 +8,17 @@ import Catogory from "../Catogory/Catogory";
 import ProductCard from "../ProductCard/ProductCard";
 
 import { catogoriesSelector } from "../../store/catogories/catogories_selector";
-
 import { fetchCatogoriesAsync } from "../../store/catogories/catogories-action";
+import { isLoadingSelector } from "../../store/catogories/catogories_selector";
+import Spinner from "../Spinner/Spinner";
 
 function Shop() {
-  const dispatch = useDispatch()
-  const catogories = useSelector(catogoriesSelector)
-  
+  const isLoading = useSelector(isLoadingSelector);
+  const dispatch = useDispatch();
+  const catogories = useSelector(catogoriesSelector);
+
   useEffect(() => {
-   dispatch(fetchCatogoriesAsync())
+    dispatch(fetchCatogoriesAsync());
   }, []);
 
   return (
@@ -34,26 +36,33 @@ function Shop() {
                         <span>{title}</span>
                       </NavLink>
                     </h2>
-                    <div
-                      className="my-10"
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(4,1fr)",
-                        columnGap: "10px",
-                        rowGap: "50px",
-                      }}
-                    >
-                      {catogories[title].slice(0, 4).map((product) => {
-                        return <ProductCard key={title} product={product} />;
-                      })}
-                    </div>
+                    {isLoading ? (
+                      <Spinner />
+                    ) : (
+                      <div
+                        className="my-10"
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "repeat(4,1fr)",
+                          columnGap: "10px",
+                          rowGap: "50px",
+                        }}
+                      >
+                        {catogories[title].slice(0, 4).map((product) => {
+                          return <ProductCard key={title} product={product} />;
+                        })}
+                      </div>
+                    )}
                   </Fragment>
                 );
               })}
             </div>
           }
         />
-        <Route path=":catogory" element={<Catogory />} />
+        <Route
+          path=":catogory"
+          element={isLoading ? <Spinner /> : <Catogory />}
+        />
       </Routes>
     </>
   );
