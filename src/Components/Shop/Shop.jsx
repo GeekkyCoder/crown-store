@@ -8,7 +8,9 @@ import Catogory from "../Catogory/Catogory";
 import ProductCard from "../ProductCard/ProductCard";
 
 import { catogoriesSelector } from "../../store/catogories/catogories_selector";
-import { fetchCatogoriesAsync } from "../../store/catogories/catogories-action";
+// import { fetchCatogoriesAsync } from "../../store/catogories/catogories-action";
+import { fetch_catogries_start } from "../../store/catogories/catogories-action";
+
 import { isLoadingSelector } from "../../store/catogories/catogories_selector";
 import Spinner from "../Spinner/Spinner";
 
@@ -18,7 +20,7 @@ function Shop() {
   const catogories = useSelector(catogoriesSelector);
 
   useEffect(() => {
-    dispatch(fetchCatogoriesAsync());
+    dispatch(fetch_catogries_start ());
   }, []);
 
   return (
