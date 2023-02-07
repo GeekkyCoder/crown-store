@@ -6,6 +6,7 @@ import { Context as ProductContext } from "../../Context/ProductContext";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import StripePayment from "../Stripe-Payment/StripePayment";
 
 function Checkout() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function Checkout() {
     useContext(ProductContext);
 
   return (
+    <>
     <div className="w-10/12 mx-auto mt-20">
       {cartItems.length ? (
         <div className="shadow-lg py-10 px-20 bg-white">
@@ -82,6 +84,8 @@ function Checkout() {
         </div>
       )}
     </div>
+      <StripePayment/>
+    </>
   );
 }
 
